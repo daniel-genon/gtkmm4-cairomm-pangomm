@@ -46,9 +46,12 @@ protected:
 private:
 	double	stx,sty;
 	std::vector<ElementGraphique*> lstgraphe;
+	std::vector<donneesymbole> lstdonnee;
 	ElementGraphique *graphestocke, *grapheselectionne;
 	ElementGraphique *ChercherAuPoint(const double vx, const double vy);
-
+	
+	void FormateCouleur( tabcoul &tabcouleur, const std::string &phrasecouleur );
+	void ChargerDonneeSymbole();
 };
 
 #endif // AIRE_DESSIN_H

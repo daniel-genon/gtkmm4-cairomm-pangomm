@@ -17,7 +17,7 @@ Voir la licence GNU GPL pour plus de détails.
 #define FENETRE_H
 
 #include <gtkmm.h>
-#include "../entete/airededessin.h"
+#include "airededessin.h"
 
 class Fenetre : public Gtk::Window
 {
@@ -27,7 +27,7 @@ class Fenetre : public Gtk::Window
 		
 protected:
 
-	Glib::RefPtr<Gtk::CssProvider> m_refCssProvider;
+	Glib::RefPtr<Gtk::CssProvider> styledecor;
 	
 private:
 

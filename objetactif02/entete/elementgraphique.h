@@ -20,6 +20,28 @@ Voir la licence GNU GPL pour plus de détails.
 #include <pangomm.h>
 #include <gdkmm/pixbuf.h>
 #include <gdkmm/general.h>
+#include <glibmm.h>
+#include <giomm.h>
+
+typedef double tabcoul[3];
+
+struct dimsymbole
+{
+	double hauteur, largeur, xctr, yctr;
+};
+
+struct donneesymbole
+{
+	std::string txtcartouche;
+	std::string txtcorps;
+	std::string policecar;
+	std::string imagecorps;
+	int	taillepol;
+	tabcoul	couleurpolice;
+	tabcoul	couleurfond;
+	tabcoul	couleurcartouche;
+	dimsymbole	dimension;
+};
 
 class ElementGraphique
 {
@@ -51,14 +73,7 @@ public:
 	virtual ~Rectangle();
 	
 protected:
-	Glib::ustring txtcorps;
-	Glib::ustring txtcartouche;
-	Glib::ustring policecar;
-	Glib::ustring imagecorps;
-	double p_rouge, p_vert, p_bleu;
-	double t_rouge, t_vert, t_bleu;
-	double f_rouge, f_vert, f_bleu;
-	int taillepol;
+	donneesymbole	*pdonnee;
 	double htcartouche;
 	
 	virtual void Dessiner();
@@ -67,14 +82,14 @@ protected:
 class Logiciel : public Rectangle
 {
 public:
-	Logiciel();
+	Logiciel( donneesymbole *ptrdonnee );
 	virtual ~Logiciel();
 };
 
 class FichierJoint : public Rectangle
 {
 public:
-	FichierJoint();
+	FichierJoint( donneesymbole *ptrdonnee );
 	virtual ~FichierJoint();
 };
 
