@@ -1,0 +1,16 @@
+Logiciel
+Edit
+Liberation Mono
+/icone/edit48.png
+8
+0 0 0
+251 174 54
+255 255 0
+Fichier de travail
+texte édito
+Dejavu Serif
+/icone/ftrav48.png
+7
+0 0 0
+137 251 250
+255 255 0
