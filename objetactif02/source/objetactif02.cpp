@@ -14,7 +14,6 @@ Ce programme est distribué SANS AUCUNE GARANTIE.
 Voir la licence GNU GPL pour plus de détails.
 */
 #include "../entete/fenetre.h"
-
 int main(int argc, char* argv[])
 {
   auto app = Gtk::Application::create("org.gtkmm-cairomm-pangomm.objetactif02");

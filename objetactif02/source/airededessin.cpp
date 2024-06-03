@@ -21,6 +21,7 @@ AireDeDessin::AireDeDessin()
 	stx = sty = 0.0;
 	graphestocke = grapheselectionne = nullptr;
 	set_draw_func(sigc::mem_fun(*this, &AireDeDessin::Dessiner));
+	ChargerDonneeSymbole();
 }
 AireDeDessin::~AireDeDessin()
 {
@@ -34,13 +35,13 @@ void AireDeDessin::Dessiner(const Cairo::RefPtr<Cairo::Context>& cr, int width, 
 }
 void AireDeDessin::SymboleLogiciel()
 {
-	Logiciel *graphtmp = new Logiciel();
+	Logiciel *graphtmp = new Logiciel(&lstdonnee[0]);
 	lstgraphe.push_back(graphtmp);
 	queue_draw();
 }
 void AireDeDessin::SymboleFichierJoint()
 {
-	FichierJoint *graphtmp = new FichierJoint();
+	FichierJoint *graphtmp = new FichierJoint(&lstdonnee[1]);
 	lstgraphe.push_back(graphtmp);
 	queue_draw();
 }
@@ -108,6 +109,66 @@ void AireDeDessin::Grouper()
 		}
 		queue_draw();
 	}
+}
+void AireDeDessin::ChargerDonneeSymbole()
+{
+	Glib::RefPtr<Gio::InputStream> fichierdonnees = Gio::Resource::open_stream_global("/fichier/donnees.txt");
+	Glib::RefPtr<Gio::DataInputStream> lignedonnee = Gio::DataInputStream::create(fichierdonnees);
+	
+	std::string taillepolice;
+	std::string phrcouleur, resucoul;
+	size_t virg1, virg2;
+	donneesymbole dontmp;
+	bool oklecture;
+	do{
+		oklecture = false;
+		if(lignedonnee->read_line(dontmp.txtcartouche))
+			if(lignedonnee->read_line(dontmp.txtcorps))
+				if(lignedonnee->read_line(dontmp.policecar))
+					if(lignedonnee->read_line(dontmp.imagecorps))
+						if(lignedonnee->read_line(taillepolice))
+						{
+							dontmp.taillepol = std::stoi (taillepolice);
+							if(lignedonnee->read_line(phrcouleur))
+							{
+								FormateCouleur( dontmp.couleurpolice, phrcouleur );
+								if(lignedonnee->read_line(phrcouleur))
+								{
+									FormateCouleur( dontmp.couleurfond, phrcouleur );
+									if(lignedonnee->read_line(phrcouleur))
+									{
+										FormateCouleur( dontmp.couleurcartouche, phrcouleur );
+										lstdonnee.push_back(dontmp);
+										oklecture = true;
+									}
+								}
+							}
+						}
+	}while(oklecture);
+
+	Glib::RefPtr<Gio::InputStream> fichbindonnees = Gio::Resource::open_stream_global("/fichbin/donnees.bin");
+	Glib::RefPtr<Gio::DataInputStream> enrgdonnee = Gio::DataInputStream::create(fichbindonnees);
+
+	dimsymbole dimdon;
+	gsize	nboctet = sizeof(dimsymbole);
+	int i=0;
+	do{
+		oklecture = false;
+		if(enrgdonnee->read( &dimdon,nboctet)==nboctet)
+		{
+			lstdonnee[i].dimension = dimdon;
+			i++;
+			oklecture = true;
+		}
+	}while(oklecture);
+}
+void AireDeDessin::FormateCouleur( tabcoul &tabcouleur, const std::string &phrasecouleur )
+{
+	size_t prochain;
+	tabcouleur[0] = std::stod( phrasecouleur, &prochain );
+	tabcouleur[1] = std::stod( phrasecouleur.substr( prochain ));
+	prochain = phrasecouleur.find_last_of(' ');
+	tabcouleur[2] = std::stod( phrasecouleur.substr( prochain+1 ));
 }
 
 

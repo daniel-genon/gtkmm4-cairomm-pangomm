@@ -13,7 +13,7 @@ selon les termes de la Licence Publique Générale GNU telle que publiée par la
 Ce programme est distribué SANS AUCUNE GARANTIE.
 Voir la licence GNU GPL pour plus de détails.
 */
-#include"../entete/elementgraphique.h"
+#include "../entete/elementgraphique.h"
 ElementGraphique::ElementGraphique(){}
 ElementGraphique::~ElementGraphique(){}
 
@@ -58,29 +58,18 @@ void ElementGraphique::DefinirCoordonees( double larg, double haut)
 
 Rectangle::Rectangle()
 {
-	double largeur = 150.0;
-	double hauteur = 80.0;
-	xctr = 80;
-	yctr = 70;
-	DefinirCoordonees(largeur,hauteur);
-	htcartouche		= (yb-yh)*0.4;
-	txtcartouche	= "rectangle";
-	txtcorps		= "corps";
-	policecar		= "Free Serif";
-	imagecorps		= "./rect48.png";
-	taillepol		= 10;
-	p_rouge=0; 	p_vert=0;	p_bleu=0;
-	f_rouge=251;f_vert=174;	f_bleu=54;
-	t_rouge=255;t_vert=255;	t_bleu=0;
+	xctr = 0.0;
+	yctr = 0.0;
+	DefinirCoordonees(0,0);
 }
 Rectangle::~Rectangle(){}
 
 void Rectangle::Dessiner()
 {
-    Couleurs(f_rouge, f_vert, f_bleu);	
+    Couleurs(pdonnee->couleurfond[0], pdonnee->couleurfond[1], pdonnee->couleurfond[2]);	
 		tmpcr->rectangle(xg,yh,xd-xg,yb-yh);
 		tmpcr->fill();
-    Couleurs(t_rouge, t_vert, t_bleu);	
+    Couleurs(pdonnee->couleurcartouche[0], pdonnee->couleurcartouche[1], pdonnee->couleurcartouche[2]);	
 		tmpcr->rectangle(xg,yh,xd-xg,htcartouche);
 		tmpcr->fill();
 	Couleurs(0, 0, 0);	
@@ -91,27 +80,27 @@ void Rectangle::Dessiner()
 		tmpcr->line_to(xg,yb);
 		tmpcr->close_path();
 		tmpcr->stroke();
-    Couleurs(p_rouge, p_vert, p_bleu);	
+    Couleurs(pdonnee->couleurpolice[0], pdonnee->couleurpolice[1], pdonnee->couleurpolice[2]);	
 	Pango::FontDescription lettrage;
-		lettrage.set_family(policecar);
+		lettrage.set_family(pdonnee->policecar);
 		lettrage.set_weight(Pango::Weight::NORMAL);
-		lettrage.set_size(Pango::SCALE*Pango::SCALE_X_LARGE*taillepol);
-		
-	auto image = Gdk::Pixbuf::create_from_file(imagecorps);
+		lettrage.set_size( Pango::SCALE * Pango::SCALE_X_LARGE * pdonnee->taillepol );
+
+	Glib::RefPtr<Gdk::Pixbuf> image = Gdk::Pixbuf::create_from_resource(pdonnee->imagecorps);//resobjetactif_get_resource
 		int lgimg = image->get_width();
 		int htimg = image->get_height();
 		
 	int lgtxt, httxt;
 	Glib::RefPtr<Pango::Layout> cadrecorp = Pango::Layout::create(tmpcr);
 		cadrecorp->set_font_description(lettrage);
-		cadrecorp->set_text(txtcorps);
+		cadrecorp->set_text(pdonnee->txtcorps);
 			cadrecorp->get_pixel_size( lgtxt, httxt );
 	tmpcr->move_to(xctr+(lgimg*0.375)-lgtxt/2,yctr+htcartouche/2-httxt/2);
 	cadrecorp->show_in_cairo_context(tmpcr);
 	
 	Glib::RefPtr<Pango::Layout> cadrecart = Pango::Layout::create(tmpcr);
 		cadrecart->set_font_description(lettrage);
-		cadrecart->set_text(txtcartouche);
+		cadrecart->set_text(pdonnee->txtcartouche);
 			cadrecart->get_pixel_size( lgtxt, httxt );
 	tmpcr->move_to(xctr-lgtxt/2,yh+htcartouche/2-httxt/2);
 	cadrecart->show_in_cairo_context(tmpcr);
@@ -120,29 +109,22 @@ void Rectangle::Dessiner()
 	tmpcr->paint();
 }
 
-Logiciel::Logiciel()
+Logiciel::Logiciel( donneesymbole *ptrdonnee )
 {
-	txtcartouche	= "Logiciel";
-	txtcorps		= "Edit";
-	policecar		= "Liberation Mono";
-	imagecorps		= "./edit48.png";
-	taillepol		= 8;
+	pdonnee = ptrdonnee;
+	xctr = pdonnee->dimension.xctr;
+	yctr = pdonnee->dimension.yctr;
+	DefinirCoordonees(pdonnee->dimension.largeur,pdonnee->dimension.hauteur);
+	htcartouche		= (yb-yh)*0.4;
 }
 Logiciel::~Logiciel(){}
 
-FichierJoint::FichierJoint()
+FichierJoint::FichierJoint( donneesymbole *ptrdonnee )
 {
-	double largeur = 180.0;
-	double hauteur = 50.0;
+	pdonnee = ptrdonnee;
 	xctr = 200;
 	yctr = 100;
-	DefinirCoordonees(largeur,hauteur);
-	txtcartouche	= "Fichier de travail";
-	txtcorps		= "texte édito";
-	policecar		= "Dejavu Serif";
-	imagecorps		= "./ftrav48.png";
-	taillepol		= 7;
+	DefinirCoordonees(pdonnee->dimension.largeur,pdonnee->dimension.hauteur);
 	htcartouche		= (yb-yh)*0.4;
-	f_rouge=137; f_vert=251; f_bleu=250;
 }
 FichierJoint::~FichierJoint(){}
