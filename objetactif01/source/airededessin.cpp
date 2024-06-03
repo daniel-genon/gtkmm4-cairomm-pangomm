@@ -1,7 +1,6 @@
 /*
-AireDeDessin - V1.0
+AireDeDessin
 Daniel Génon - 19.11.2023 - 08500 Revin
-
 Classe destinée à contrôler les objets graphiques
 
    Ce programme est un logiciel libre ; vous pouvez le redistribuer et/ou le modifier 
@@ -86,18 +85,13 @@ void AireDeDessin::NettoyerSelection()
 }
 void AireDeDessin::SupprimerSelection()
 {
-	if(grapheselectionne != nullptr)
-	{
-		for (unsigned i=0; i<lstgraphe.size(); i++)
-		{
-			if(lstgraphe[i]==grapheselectionne)
-			{
-				lstgraphe.erase(lstgraphe.begin()+i);
-				delete grapheselectionne;
-				NettoyerSelection();
-				queue_draw();
-			}
-		}
+	ctmp = std::find (lstgraphe.begin(), lstgraphe.end(), grapheselectionne);
+    if(ctmp != lstgraphe.end())
+    {
+		lstgraphe.erase(ctmp);
+		delete grapheselectionne;
+		NettoyerSelection();
+		queue_draw();
 	}
 }
 void AireDeDessin::Grouper()

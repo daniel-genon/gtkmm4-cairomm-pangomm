@@ -1,9 +1,7 @@
 /*
-ElementGraphique - V1.0
+ElementGraphique
 Daniel Génon - 19.11.2023 - 08500 Revin
-
-Classe destinée à créer des objets graphiques
-
+Classe destinée à créer et manipuler les objets graphiques
    Ce programme est un logiciel libre ; vous pouvez le redistribuer et/ou le modifier 
 selon les termes de la Licence Publique Générale GNU telle que publiée par la Free Software Foundation :
 - soit la version 2 de la Licence;
