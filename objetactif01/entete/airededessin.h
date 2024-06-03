@@ -1,9 +1,7 @@
 /*
-AireDeDessin - V1.0
+AireDeDessin
 Daniel Génon - 19.11.2023 - 08500 Revin
-
-Classe destinée à contrôler les objets graphiques
-
+Classe destinée à créer et manipuler les objets graphiques
    Ce programme est un logiciel libre ; vous pouvez le redistribuer et/ou le modifier 
 selon les termes de la Licence Publique Générale GNU telle que publiée par la Free Software Foundation :
 - soit la version 2 de la Licence;
@@ -17,9 +15,7 @@ Voir GNU GPL pour plus de détails.
 #include <gtkmm/drawingarea.h>
 #include <cairomm/context.h>
 #include "elementgraphique.h"
-
-class AireDeDessin;
-typedef void (AireDeDessin::*PtrFnctAireDeDessin)(void);
+#include <algorithm>
 
 class AireDeDessin : public Gtk::DrawingArea
 {
@@ -45,9 +41,9 @@ protected:
 private:
 	double	stx,sty;
 	std::vector<ElementGraphique*> lstgraphe;
+	std::vector<ElementGraphique*>::iterator ctmp;
 	ElementGraphique *graphestocke, *grapheselectionne;
 	ElementGraphique *ChercherAuPoint(const double vx, const double vy);
 
 };
-
 #endif // AIRE_DESSIN_H
