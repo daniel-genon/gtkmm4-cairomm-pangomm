@@ -1,0 +1,12 @@
+#zonegraphe{
+  background-color: rgb(60,75,80);
+  border:           solid white 1px;
+  border-radius:    8px;
+}
+#grouper{
+  border:	solid rgb(164,0,0) 5px;
+}
+#supprimer{
+  border:	solid rgb(209,191,45) 5px;
+}
+
