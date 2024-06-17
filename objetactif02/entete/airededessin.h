@@ -20,9 +20,6 @@ Voir la licence GNU GPL pour plus de détails.
 #include <cairomm/context.h>
 #include "elementgraphique.h"
 
-class AireDeDessin;
-typedef void (AireDeDessin::*PtrFnctAireDeDessin)(void);
-
 class AireDeDessin : public Gtk::DrawingArea
 {
 public:

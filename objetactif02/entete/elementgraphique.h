@@ -61,7 +61,7 @@ protected:
 	double xctr,yctr;
 	
 	void Couleurs(int valR, int valV, int valB);
-	void DefinirCoordonees( double larg, double haut );
+	void DefinirCoordonnees( double larg, double haut );
 	
 	virtual void Dessiner();
 };
